@@ -2,6 +2,8 @@
 
 Plataforma de gestão de imóveis para proprietários no Nordeste do Brasil. Proptech SaaS focada em simplificar a administração de aluguéis, financeiro, contratos e relacionamento proprietário-inquilino.
 
+**Link apresetação drive:** https://drive.google.com/file/d/1NPN2U3RQj6j_tm6WdgiT7Cfv4yUh8OC7/view?usp=drive_link
+
 ## Contexto de Mercado
 
 O segmento de Proptechs no Brasil cresce rapidamente: cerca de 1.200 startups operam em gestão e comercialização imobiliária, com captação estimada em R$ 4,1 bilhões entre 2022-2025. Entretanto, nenhuma solução relevante atende a região Norte/Nordeste. A AlugaFlow nasce para preencher essa lacuna, com foco inicial em Fortaleza — a capital mais rica do Nordeste.
