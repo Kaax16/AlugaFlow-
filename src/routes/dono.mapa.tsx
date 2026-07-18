@@ -9,7 +9,8 @@ import { Switch } from "@/components/ui/switch";
 import { StatusBadge } from "@/components/status-badge";
 import { ClientOnly } from "@/components/client-only";
 import { PropertyMap, type MapPoint } from "@/components/property/property-map";
-import { properties, type PropertyStatus } from "@/data/properties";
+import { type PropertyStatus } from "@/data/properties";
+import { usePropertiesList } from "@/hooks/use-properties";
 import { formatStreetLine } from "@/lib/address";
 import { formatBRL } from "@/lib/format";
 import { distanceToSeaKm, isNearSea } from "@/lib/geo";
@@ -35,12 +36,15 @@ const statusChips: { value: Status; label: string }[] = [
   { value: "manutencao", label: "Em manutenção" },
 ];
 
-const neighborhoods = Array.from(new Set(properties.map((p) => p.address.neighborhood))).sort();
-
 const kmSea = (km: number) =>
   km < 1 ? `${Math.round(km * 1000)} m do mar` : `${km.toFixed(1).replace(".", ",")} km do mar`;
 
 function Mapa() {
+  const properties = usePropertiesList();
+  const neighborhoods = useMemo(
+    () => Array.from(new Set(properties.map((p) => p.address.neighborhood))).sort(),
+    [properties],
+  );
   const [status, setStatus] = useState<Status>("todos");
   const [nearSea, setNearSea] = useState(false);
   const [neighborhood, setNeighborhood] = useState<string>("todos");
@@ -62,7 +66,7 @@ function Mapa() {
       if (sortBy === "aluguel-asc") return a.financial.rent - b.financial.rent;
       return distanceToSeaKm(a.coordinates) - distanceToSeaKm(b.coordinates);
     });
-  }, [status, nearSea, neighborhood, sortBy]);
+  }, [status, nearSea, neighborhood, sortBy, properties]);
 
   const points = useMemo<MapPoint[]>(
     () =>
