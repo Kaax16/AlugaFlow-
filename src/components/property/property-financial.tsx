@@ -27,8 +27,18 @@ export function PropertyFinancial({ property }: Props) {
       </CardHeader>
       <CardContent className="space-y-5">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <KpiCard label="Aluguel" value={formatBRL(financial.rent)} icon={DollarSign} tone="default" />
-          <KpiCard label="Condomínio" value={formatBRL(financial.condo)} icon={Receipt} tone="info" />
+          <KpiCard
+            label="Aluguel"
+            value={formatBRL(financial.rent)}
+            icon={DollarSign}
+            tone="default"
+          />
+          <KpiCard
+            label="Condomínio"
+            value={formatBRL(financial.condo)}
+            icon={Receipt}
+            tone="info"
+          />
           <KpiCard label="IPTU" value={formatBRL(financial.iptu)} icon={Receipt} tone="warning" />
           <KpiCard
             label="Total mensal"
@@ -62,7 +72,8 @@ export function PropertyFinancial({ property }: Props) {
             <div className="text-sm">
               <p className="font-semibold text-destructive">Aluguel em atraso</p>
               <p className="text-muted-foreground">
-                Vencimento em {formatDate(financial.nextDueDate)}. Envie um lembrete pelo chat do imóvel.
+                Vencimento em {formatDate(financial.nextDueDate)}. Envie um lembrete pelo chat do
+                imóvel.
               </p>
             </div>
           </div>

@@ -15,14 +15,16 @@ import {
 import { StatusBadge } from "@/components/status-badge";
 import { AccessibilityMenu } from "@/components/accessibility-menu";
 import { useTheme } from "@/components/theme-provider";
-import { properties } from "@/data/properties";
+import { usePropertiesList } from "@/hooks/use-properties";
 import { formatStreetLine } from "@/lib/address";
 import { cn } from "@/lib/utils";
 
-// Alertas derivados dos dados: aluguéis fora de "em dia".
-const alerts = properties.filter((p) => p.financial.status !== "em_dia");
-
 export function AppHeader() {
+  const properties = usePropertiesList();
+  const alerts = useMemo(
+    () => properties.filter((p) => p.financial.status !== "em_dia"),
+    [properties],
+  );
   const { theme, toggleTheme } = useTheme();
   const { toggleSidebar, state } = useSidebar();
   const [query, setQuery] = useState("");
@@ -38,7 +40,7 @@ export function AppHeader() {
           .includes(q),
       )
       .slice(0, 6);
-  }, [query]);
+  }, [query, properties]);
 
   return (
     <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background px-3 sm:px-6">

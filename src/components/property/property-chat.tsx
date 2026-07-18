@@ -10,9 +10,11 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   property: Property;
+  /** Perfil de quem envia as mensagens neste chat. Padrão: proprietário. */
+  role?: "owner" | "tenant";
 }
 
-export function PropertyChat({ property }: Props) {
+export function PropertyChat({ property, role = "owner" }: Props) {
   const [messages, setMessages] = useState<ChatMessage[]>(property.chat);
   const [draft, setDraft] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -22,14 +24,17 @@ export function PropertyChat({ property }: Props) {
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
+  const isTenantSending = role === "tenant";
+  const canSend = Boolean(property.tenant);
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const text = draft.trim();
     if (!text) return;
     const newMessage: ChatMessage = {
       id: `local-${Date.now()}`,
-      authorId: property.owner.id,
-      authorRole: "owner",
+      authorId: isTenantSending ? (property.tenant?.id ?? "tenant") : property.owner.id,
+      authorRole: role,
       text,
       sentAt: new Date().toISOString(),
       read: false,
@@ -38,7 +43,15 @@ export function PropertyChat({ property }: Props) {
     setDraft("");
   };
 
-  const tenantName = property.tenant?.name ?? "Inquilino não vinculado";
+  const counterpart = isTenantSending ? property.owner : property.tenant;
+  const counterpartName = isTenantSending
+    ? property.owner.name
+    : (property.tenant?.name ?? "Inquilino não vinculado");
+  const counterpartHue = isTenantSending
+    ? property.owner.avatarHue
+    : (property.tenant?.avatarHue ?? 295);
+  const counterpartLabel = isTenantSending ? "Proprietário" : "Inquilino";
+  const placeholderName = counterpartName.split(" ")[0] ?? counterpartLabel.toLowerCase();
 
   return (
     <Card className="flex h-[560px] flex-col shadow-card">
@@ -48,16 +61,16 @@ export function PropertyChat({ property }: Props) {
             <AvatarFallback
               className="text-xs font-semibold text-primary-foreground"
               style={{
-                background: `oklch(0.6 0.2 ${property.tenant?.avatarHue ?? 295})`,
+                background: `oklch(0.6 0.2 ${counterpartHue})`,
               }}
             >
-              {property.tenant ? initialsFromName(property.tenant.name) : "?"}
+              {counterpart ? initialsFromName(counterpartName) : "?"}
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <CardTitle className="truncate text-base">{tenantName}</CardTitle>
+            <CardTitle className="truncate text-base">{counterpartName}</CardTitle>
             <p className="text-xs text-muted-foreground">
-              Conversa exclusiva deste imóvel · {property.name}
+              {counterpartLabel} · {property.name}
             </p>
           </div>
           <span className="flex items-center gap-1.5 rounded-full bg-success/15 px-2.5 py-1 text-[11px] font-medium text-success">
@@ -68,28 +81,23 @@ export function PropertyChat({ property }: Props) {
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col gap-4 overflow-hidden p-0">
-        <div
-          ref={scrollRef}
-          className="flex-1 space-y-3 overflow-y-auto bg-gradient-subtle p-4"
-        >
+        <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-gradient-subtle p-4">
           {messages.length === 0 ? (
             <div className="grid h-full place-items-center text-center text-sm text-muted-foreground">
-              Nenhuma mensagem ainda.<br />
+              Nenhuma mensagem ainda.
+              <br />
               Envie a primeira mensagem para começar a conversa.
             </div>
           ) : (
-            messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
+            messages.map((msg) => <MessageBubble key={msg.id} message={msg} viewerRole={role} />)
           )}
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex items-end gap-2 border-t bg-card p-3"
-        >
+        <form onSubmit={handleSubmit} className="flex items-end gap-2 border-t bg-card p-3">
           <Textarea
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            placeholder={`Escreva para ${property.tenant?.name.split(" ")[0] ?? "o inquilino"}...`}
+            placeholder={`Escreva para ${placeholderName}...`}
             className="min-h-11 resize-none"
             rows={1}
             onKeyDown={(e) => {
@@ -102,7 +110,7 @@ export function PropertyChat({ property }: Props) {
           <Button
             type="submit"
             size="icon"
-            disabled={!draft.trim() || !property.tenant}
+            disabled={!draft.trim() || !canSend}
             className="h-11 w-11 shrink-0 bg-gradient-primary text-primary-foreground shadow-elegant hover:opacity-95"
             aria-label="Enviar mensagem"
           >
@@ -114,14 +122,20 @@ export function PropertyChat({ property }: Props) {
   );
 }
 
-function MessageBubble({ message }: { message: ChatMessage }) {
-  const isOwner = message.authorRole === "owner";
+function MessageBubble({
+  message,
+  viewerRole,
+}: {
+  message: ChatMessage;
+  viewerRole: "owner" | "tenant";
+}) {
+  const isMine = message.authorRole === viewerRole;
   return (
-    <div className={cn("flex", isOwner ? "justify-end" : "justify-start")}>
+    <div className={cn("flex", isMine ? "justify-end" : "justify-start")}>
       <div
         className={cn(
           "max-w-[78%] rounded-2xl px-4 py-2.5 text-sm shadow-sm",
-          isOwner
+          isMine
             ? "rounded-br-sm bg-gradient-primary text-primary-foreground"
             : "rounded-bl-sm border bg-card text-card-foreground",
         )}
@@ -130,11 +144,11 @@ function MessageBubble({ message }: { message: ChatMessage }) {
         <div
           className={cn(
             "mt-1 flex items-center justify-end gap-1 text-[10px]",
-            isOwner ? "text-primary-foreground/80" : "text-muted-foreground",
+            isMine ? "text-primary-foreground/80" : "text-muted-foreground",
           )}
         >
           <span>{formatTime(message.sentAt)}</span>
-          {isOwner ? (
+          {isMine ? (
             message.read ? (
               <CheckCheck className="h-3 w-3" />
             ) : (

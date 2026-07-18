@@ -14,12 +14,7 @@ import { cn } from "@/lib/utils";
 // Tipos de daltonismo + ajustes de visão. Cada modo vira uma classe no <html>
 // e o efeito é aplicado no <body> inteiro (via filtro SVG) — reflete em TODA tela.
 export type A11yMode =
-  | "default"
-  | "protanopia"
-  | "deuteranopia"
-  | "tritanopia"
-  | "high-contrast"
-  | "reduced-motion";
+  "default" | "protanopia" | "deuteranopia" | "tritanopia" | "high-contrast" | "reduced-motion";
 
 const modes: { value: A11yMode; label: string; description: string }[] = [
   { value: "default", label: "Padrão", description: "Sem ajustes" },

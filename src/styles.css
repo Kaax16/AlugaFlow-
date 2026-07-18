@@ -434,3 +434,48 @@
   font-weight: 700;
   border: 2px solid oklch(1 0 0 / 0.9);
 }
+
+/* Marcador do imóvel do inquilino (casa). */
+.map-marker--home {
+  width: auto;
+  height: auto;
+}
+
+.map-marker__home {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  line-height: 1;
+  border-radius: 12px;
+  background-image: var(--gradient-primary);
+  border: 3px solid oklch(1 0 0 / 0.95);
+  box-shadow: 0 3px 10px oklch(0 0 0 / 0.55);
+}
+
+/* Marcador de ponto de interesse (POI). */
+.map-marker--poi {
+  width: auto;
+  height: auto;
+}
+
+.map-marker__poi {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 1;
+  border-radius: 9999px;
+  background: var(--marker-color, oklch(0.66 0.21 300));
+  border: 2px solid oklch(1 0 0 / 0.95);
+  box-shadow: 0 2px 6px oklch(0 0 0 / 0.5);
+}
+
+.map-marker--poi.map-marker--active .map-marker__poi {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 4px var(--marker-color, oklch(0.66 0.21 300) / 0.35),
+    0 2px 10px oklch(0 0 0 / 0.6);
+}

@@ -914,6 +914,39 @@ export function getPropertyById(id: string): Property | undefined {
   return properties.find((p) => p.id === id);
 }
 
+// --- Store mockado com listeners --------------------------------------------
+// A demo não tem back-end, então mantemos as mutações em memória e emitimos
+// eventos para os componentes reagirem (via `usePropertiesList`).
+const listeners = new Set<() => void>();
+let version = 0;
+
+function emit() {
+  version += 1;
+  listeners.forEach((cb) => cb());
+}
+
+export function subscribeProperties(cb: () => void): () => void {
+  listeners.add(cb);
+  return () => listeners.delete(cb);
+}
+
+export function getPropertiesVersion(): number {
+  return version;
+}
+
+export function addProperty(property: Property): void {
+  properties.unshift(property);
+  emit();
+}
+
+export function removeProperty(id: string): boolean {
+  const idx = properties.findIndex((p) => p.id === id);
+  if (idx === -1) return false;
+  properties.splice(idx, 1);
+  emit();
+  return true;
+}
+
 export function statusLabel(status: PropertyStatus): string {
   switch (status) {
     case "ocupado":

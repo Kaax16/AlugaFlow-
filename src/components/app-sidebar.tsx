@@ -1,7 +1,9 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
+  ChevronsUpDown,
   FileText,
   LayoutDashboard,
+  LogOut,
   MapPinned,
   MessageSquare,
   Home,
@@ -23,8 +25,18 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { BrandLogo } from "@/components/brand-logo";
-import { properties } from "@/data/properties";
+import { usePropertiesList } from "@/hooks/use-properties";
+import { logout as signOut, useSession } from "@/data/auth";
+import { toast } from "sonner";
 
 type NavItem = {
   title: string;
@@ -48,9 +60,20 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const properties = usePropertiesList();
+  const navigate = useNavigate();
+  const session = useSession();
   const owner = properties[0]?.owner;
+  const displayName = session?.displayName ?? owner?.name ?? "Proprietário";
+  const displayEmail = session?.email;
 
   const isActive = (url: string) => pathname === url || pathname.startsWith(url + "/");
+
+  const handleLogout = () => {
+    signOut();
+    toast.success("Você saiu do painel.");
+    navigate({ to: "/", replace: true });
+  };
 
   return (
     <Sidebar collapsible="icon" className="border-r">
@@ -98,26 +121,55 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t border-sidebar-border">
         {owner ? (
-          <div className="flex items-center gap-3 px-1 py-2">
-            <Avatar className="h-9 w-9 shrink-0 ring-2 ring-primary/20">
-              <AvatarFallback
-                className="text-xs font-semibold text-primary-foreground"
-                style={{ background: `oklch(0.6 0.2 ${owner.avatarHue})` }}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex w-full items-center gap-3 rounded-lg px-1 py-2 text-left transition-colors hover:bg-sidebar-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Menu do usuário"
               >
-                {owner.name
-                  .split(" ")
-                  .slice(0, 2)
-                  .map((n) => n[0])
-                  .join("")}
-              </AvatarFallback>
-            </Avatar>
-            {!collapsed && (
-              <div className="min-w-0 leading-tight">
-                <p className="truncate text-sm font-medium">{owner.name}</p>
-                <p className="truncate text-[11px] text-muted-foreground">Proprietário</p>
-              </div>
-            )}
-          </div>
+                <Avatar className="h-9 w-9 shrink-0 ring-2 ring-primary/20">
+                  <AvatarFallback
+                    className="text-xs font-semibold text-primary-foreground"
+                    style={{ background: `oklch(0.6 0.2 ${owner.avatarHue})` }}
+                  >
+                    {displayName
+                      .split(" ")
+                      .slice(0, 2)
+                      .map((n) => n[0])
+                      .join("")}
+                  </AvatarFallback>
+                </Avatar>
+                {!collapsed && (
+                  <>
+                    <div className="min-w-0 flex-1 leading-tight">
+                      <p className="truncate text-sm font-medium">{displayName}</p>
+                      <p className="truncate text-[11px] text-muted-foreground">
+                        {displayEmail ?? "Proprietário"}
+                      </p>
+                    </div>
+                    <ChevronsUpDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  </>
+                )}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="top" align="start" className="w-56">
+              <DropdownMenuLabel className="text-xs text-muted-foreground">
+                Sessão de proprietário
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault();
+                  handleLogout();
+                }}
+                className="gap-2 text-destructive focus:bg-destructive/10 focus:text-destructive"
+              >
+                <LogOut className="h-4 w-4" />
+                Sair
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : null}
       </SidebarFooter>
     </Sidebar>

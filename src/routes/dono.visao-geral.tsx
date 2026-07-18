@@ -5,7 +5,8 @@ import { KpiCard } from "@/components/kpi-card";
 import { AnalyticsChart } from "@/components/analytics-chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { properties, monthlyRevenue, statusLabel } from "@/data/properties";
+import { monthlyRevenue, statusLabel } from "@/data/properties";
+import { usePropertiesList } from "@/hooks/use-properties";
 import { formatBRL, formatBRLShort } from "@/lib/format";
 
 export const Route = createFileRoute("/dono/visao-geral")({
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/dono/visao-geral")({
 const shortName = (name: string) => name.replace(/^(Apto|Casa|Studio|Cobertura|Flat)\s?/, "");
 
 function VisaoGeral() {
+  const properties = usePropertiesList();
   const navigate = useNavigate();
   const openProperty = (i: number) =>
     navigate({ to: "/dono/imoveis/$id", params: { id: properties[i].id } });

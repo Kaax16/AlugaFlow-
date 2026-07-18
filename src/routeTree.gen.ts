@@ -9,57 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as DonoRouteImport } from './routes/dono'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DonoVisaoGeralRouteImport } from './routes/dono.visao-geral'
-import { Route as DonoMapaRouteImport } from './routes/dono.mapa'
-import { Route as DonoManutencaoRouteImport } from './routes/dono.manutencao'
-import { Route as DonoImoveisRouteImport } from './routes/dono.imoveis'
-import { Route as DonoFinanceiroRouteImport } from './routes/dono.financeiro'
-import { Route as DonoDocumentosRouteImport } from './routes/dono.documentos'
-import { Route as DonoConversasRouteImport } from './routes/dono.conversas'
+import { Route as DonoRouteImport } from './routes/dono'
+import { Route as InquilinoRouteImport } from './routes/inquilino'
 import { Route as DonoContratosRouteImport } from './routes/dono.contratos'
+import { Route as DonoConversasRouteImport } from './routes/dono.conversas'
+import { Route as DonoDocumentosRouteImport } from './routes/dono.documentos'
+import { Route as DonoFinanceiroRouteImport } from './routes/dono.financeiro'
+import { Route as DonoImoveisRouteImport } from './routes/dono.imoveis'
+import { Route as DonoManutencaoRouteImport } from './routes/dono.manutencao'
+import { Route as DonoMapaRouteImport } from './routes/dono.mapa'
+import { Route as DonoVisaoGeralRouteImport } from './routes/dono.visao-geral'
+import { Route as InquilinoContratoRouteImport } from './routes/inquilino.contrato'
+import { Route as InquilinoConversasRouteImport } from './routes/inquilino.conversas'
+import { Route as InquilinoDocumentosRouteImport } from './routes/inquilino.documentos'
+import { Route as InquilinoFinanceiroRouteImport } from './routes/inquilino.financeiro'
+import { Route as InquilinoManutencaoRouteImport } from './routes/inquilino.manutencao'
+import { Route as InquilinoMeuImovelRouteImport } from './routes/inquilino.meu-imovel'
+import { Route as InquilinoProximidadesRouteImport } from './routes/inquilino.proximidades'
+import { Route as InquilinoVisaoGeralRouteImport } from './routes/inquilino.visao-geral'
 import { Route as DonoImoveisIndexRouteImport } from './routes/dono.imoveis.index'
 import { Route as DonoImoveisIdRouteImport } from './routes/dono.imoveis.$id'
 
-const DonoRoute = DonoRouteImport.update({
-  id: '/dono',
-  path: '/dono',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DonoVisaoGeralRoute = DonoVisaoGeralRouteImport.update({
-  id: '/visao-geral',
-  path: '/visao-geral',
-  getParentRoute: () => DonoRoute,
+const DonoRoute = DonoRouteImport.update({
+  id: '/dono',
+  path: '/dono',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const DonoMapaRoute = DonoMapaRouteImport.update({
-  id: '/mapa',
-  path: '/mapa',
-  getParentRoute: () => DonoRoute,
+const InquilinoRoute = InquilinoRouteImport.update({
+  id: '/inquilino',
+  path: '/inquilino',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const DonoManutencaoRoute = DonoManutencaoRouteImport.update({
-  id: '/manutencao',
-  path: '/manutencao',
-  getParentRoute: () => DonoRoute,
-} as any)
-const DonoImoveisRoute = DonoImoveisRouteImport.update({
-  id: '/imoveis',
-  path: '/imoveis',
-  getParentRoute: () => DonoRoute,
-} as any)
-const DonoFinanceiroRoute = DonoFinanceiroRouteImport.update({
-  id: '/financeiro',
-  path: '/financeiro',
-  getParentRoute: () => DonoRoute,
-} as any)
-const DonoDocumentosRoute = DonoDocumentosRouteImport.update({
-  id: '/documentos',
-  path: '/documentos',
+const DonoContratosRoute = DonoContratosRouteImport.update({
+  id: '/contratos',
+  path: '/contratos',
   getParentRoute: () => DonoRoute,
 } as any)
 const DonoConversasRoute = DonoConversasRouteImport.update({
@@ -67,10 +56,75 @@ const DonoConversasRoute = DonoConversasRouteImport.update({
   path: '/conversas',
   getParentRoute: () => DonoRoute,
 } as any)
-const DonoContratosRoute = DonoContratosRouteImport.update({
-  id: '/contratos',
-  path: '/contratos',
+const DonoDocumentosRoute = DonoDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
   getParentRoute: () => DonoRoute,
+} as any)
+const DonoFinanceiroRoute = DonoFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoImoveisRoute = DonoImoveisRouteImport.update({
+  id: '/imoveis',
+  path: '/imoveis',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoManutencaoRoute = DonoManutencaoRouteImport.update({
+  id: '/manutencao',
+  path: '/manutencao',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoMapaRoute = DonoMapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoVisaoGeralRoute = DonoVisaoGeralRouteImport.update({
+  id: '/visao-geral',
+  path: '/visao-geral',
+  getParentRoute: () => DonoRoute,
+} as any)
+const InquilinoContratoRoute = InquilinoContratoRouteImport.update({
+  id: '/contrato',
+  path: '/contrato',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoConversasRoute = InquilinoConversasRouteImport.update({
+  id: '/conversas',
+  path: '/conversas',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoDocumentosRoute = InquilinoDocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoFinanceiroRoute = InquilinoFinanceiroRouteImport.update({
+  id: '/financeiro',
+  path: '/financeiro',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoManutencaoRoute = InquilinoManutencaoRouteImport.update({
+  id: '/manutencao',
+  path: '/manutencao',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoMeuImovelRoute = InquilinoMeuImovelRouteImport.update({
+  id: '/meu-imovel',
+  path: '/meu-imovel',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoProximidadesRoute = InquilinoProximidadesRouteImport.update({
+  id: '/proximidades',
+  path: '/proximidades',
+  getParentRoute: () => InquilinoRoute,
+} as any)
+const InquilinoVisaoGeralRoute = InquilinoVisaoGeralRouteImport.update({
+  id: '/visao-geral',
+  path: '/visao-geral',
+  getParentRoute: () => InquilinoRoute,
 } as any)
 const DonoImoveisIndexRoute = DonoImoveisIndexRouteImport.update({
   id: '/',
@@ -86,6 +140,7 @@ const DonoImoveisIdRoute = DonoImoveisIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/inquilino': typeof InquilinoRouteWithChildren
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
@@ -94,12 +149,21 @@ export interface FileRoutesByFullPath {
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
+  '/inquilino/contrato': typeof InquilinoContratoRoute
+  '/inquilino/conversas': typeof InquilinoConversasRoute
+  '/inquilino/documentos': typeof InquilinoDocumentosRoute
+  '/inquilino/financeiro': typeof InquilinoFinanceiroRoute
+  '/inquilino/manutencao': typeof InquilinoManutencaoRoute
+  '/inquilino/meu-imovel': typeof InquilinoMeuImovelRoute
+  '/inquilino/proximidades': typeof InquilinoProximidadesRoute
+  '/inquilino/visao-geral': typeof InquilinoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis/': typeof DonoImoveisIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/inquilino': typeof InquilinoRouteWithChildren
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
@@ -107,6 +171,14 @@ export interface FileRoutesByTo {
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
+  '/inquilino/contrato': typeof InquilinoContratoRoute
+  '/inquilino/conversas': typeof InquilinoConversasRoute
+  '/inquilino/documentos': typeof InquilinoDocumentosRoute
+  '/inquilino/financeiro': typeof InquilinoFinanceiroRoute
+  '/inquilino/manutencao': typeof InquilinoManutencaoRoute
+  '/inquilino/meu-imovel': typeof InquilinoMeuImovelRoute
+  '/inquilino/proximidades': typeof InquilinoProximidadesRoute
+  '/inquilino/visao-geral': typeof InquilinoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis': typeof DonoImoveisIndexRoute
 }
@@ -114,6 +186,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/inquilino': typeof InquilinoRouteWithChildren
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
@@ -122,6 +195,14 @@ export interface FileRoutesById {
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
+  '/inquilino/contrato': typeof InquilinoContratoRoute
+  '/inquilino/conversas': typeof InquilinoConversasRoute
+  '/inquilino/documentos': typeof InquilinoDocumentosRoute
+  '/inquilino/financeiro': typeof InquilinoFinanceiroRoute
+  '/inquilino/manutencao': typeof InquilinoManutencaoRoute
+  '/inquilino/meu-imovel': typeof InquilinoMeuImovelRoute
+  '/inquilino/proximidades': typeof InquilinoProximidadesRoute
+  '/inquilino/visao-geral': typeof InquilinoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis/': typeof DonoImoveisIndexRoute
 }
@@ -130,6 +211,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dono'
+    | '/inquilino'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
@@ -138,12 +220,21 @@ export interface FileRouteTypes {
     | '/dono/manutencao'
     | '/dono/mapa'
     | '/dono/visao-geral'
+    | '/inquilino/contrato'
+    | '/inquilino/conversas'
+    | '/inquilino/documentos'
+    | '/inquilino/financeiro'
+    | '/inquilino/manutencao'
+    | '/inquilino/meu-imovel'
+    | '/inquilino/proximidades'
+    | '/inquilino/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dono'
+    | '/inquilino'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
@@ -151,12 +242,21 @@ export interface FileRouteTypes {
     | '/dono/manutencao'
     | '/dono/mapa'
     | '/dono/visao-geral'
+    | '/inquilino/contrato'
+    | '/inquilino/conversas'
+    | '/inquilino/documentos'
+    | '/inquilino/financeiro'
+    | '/inquilino/manutencao'
+    | '/inquilino/meu-imovel'
+    | '/inquilino/proximidades'
+    | '/inquilino/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis'
   id:
     | '__root__'
     | '/'
     | '/dono'
+    | '/inquilino'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
@@ -165,6 +265,14 @@ export interface FileRouteTypes {
     | '/dono/manutencao'
     | '/dono/mapa'
     | '/dono/visao-geral'
+    | '/inquilino/contrato'
+    | '/inquilino/conversas'
+    | '/inquilino/documentos'
+    | '/inquilino/financeiro'
+    | '/inquilino/manutencao'
+    | '/inquilino/meu-imovel'
+    | '/inquilino/proximidades'
+    | '/inquilino/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis/'
   fileRoutesById: FileRoutesById
@@ -172,17 +280,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DonoRoute: typeof DonoRouteWithChildren
+  InquilinoRoute: typeof InquilinoRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/dono': {
-      id: '/dono'
-      path: '/dono'
-      fullPath: '/dono'
-      preLoaderRoute: typeof DonoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -190,46 +292,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dono/visao-geral': {
-      id: '/dono/visao-geral'
-      path: '/visao-geral'
-      fullPath: '/dono/visao-geral'
-      preLoaderRoute: typeof DonoVisaoGeralRouteImport
-      parentRoute: typeof DonoRoute
+    '/dono': {
+      id: '/dono'
+      path: '/dono'
+      fullPath: '/dono'
+      preLoaderRoute: typeof DonoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/dono/mapa': {
-      id: '/dono/mapa'
-      path: '/mapa'
-      fullPath: '/dono/mapa'
-      preLoaderRoute: typeof DonoMapaRouteImport
-      parentRoute: typeof DonoRoute
+    '/inquilino': {
+      id: '/inquilino'
+      path: '/inquilino'
+      fullPath: '/inquilino'
+      preLoaderRoute: typeof InquilinoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/dono/manutencao': {
-      id: '/dono/manutencao'
-      path: '/manutencao'
-      fullPath: '/dono/manutencao'
-      preLoaderRoute: typeof DonoManutencaoRouteImport
-      parentRoute: typeof DonoRoute
-    }
-    '/dono/imoveis': {
-      id: '/dono/imoveis'
-      path: '/imoveis'
-      fullPath: '/dono/imoveis'
-      preLoaderRoute: typeof DonoImoveisRouteImport
-      parentRoute: typeof DonoRoute
-    }
-    '/dono/financeiro': {
-      id: '/dono/financeiro'
-      path: '/financeiro'
-      fullPath: '/dono/financeiro'
-      preLoaderRoute: typeof DonoFinanceiroRouteImport
-      parentRoute: typeof DonoRoute
-    }
-    '/dono/documentos': {
-      id: '/dono/documentos'
-      path: '/documentos'
-      fullPath: '/dono/documentos'
-      preLoaderRoute: typeof DonoDocumentosRouteImport
+    '/dono/contratos': {
+      id: '/dono/contratos'
+      path: '/contratos'
+      fullPath: '/dono/contratos'
+      preLoaderRoute: typeof DonoContratosRouteImport
       parentRoute: typeof DonoRoute
     }
     '/dono/conversas': {
@@ -239,12 +320,103 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonoConversasRouteImport
       parentRoute: typeof DonoRoute
     }
-    '/dono/contratos': {
-      id: '/dono/contratos'
-      path: '/contratos'
-      fullPath: '/dono/contratos'
-      preLoaderRoute: typeof DonoContratosRouteImport
+    '/dono/documentos': {
+      id: '/dono/documentos'
+      path: '/documentos'
+      fullPath: '/dono/documentos'
+      preLoaderRoute: typeof DonoDocumentosRouteImport
       parentRoute: typeof DonoRoute
+    }
+    '/dono/financeiro': {
+      id: '/dono/financeiro'
+      path: '/financeiro'
+      fullPath: '/dono/financeiro'
+      preLoaderRoute: typeof DonoFinanceiroRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/imoveis': {
+      id: '/dono/imoveis'
+      path: '/imoveis'
+      fullPath: '/dono/imoveis'
+      preLoaderRoute: typeof DonoImoveisRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/manutencao': {
+      id: '/dono/manutencao'
+      path: '/manutencao'
+      fullPath: '/dono/manutencao'
+      preLoaderRoute: typeof DonoManutencaoRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/mapa': {
+      id: '/dono/mapa'
+      path: '/mapa'
+      fullPath: '/dono/mapa'
+      preLoaderRoute: typeof DonoMapaRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/visao-geral': {
+      id: '/dono/visao-geral'
+      path: '/visao-geral'
+      fullPath: '/dono/visao-geral'
+      preLoaderRoute: typeof DonoVisaoGeralRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/inquilino/contrato': {
+      id: '/inquilino/contrato'
+      path: '/contrato'
+      fullPath: '/inquilino/contrato'
+      preLoaderRoute: typeof InquilinoContratoRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/conversas': {
+      id: '/inquilino/conversas'
+      path: '/conversas'
+      fullPath: '/inquilino/conversas'
+      preLoaderRoute: typeof InquilinoConversasRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/documentos': {
+      id: '/inquilino/documentos'
+      path: '/documentos'
+      fullPath: '/inquilino/documentos'
+      preLoaderRoute: typeof InquilinoDocumentosRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/financeiro': {
+      id: '/inquilino/financeiro'
+      path: '/financeiro'
+      fullPath: '/inquilino/financeiro'
+      preLoaderRoute: typeof InquilinoFinanceiroRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/manutencao': {
+      id: '/inquilino/manutencao'
+      path: '/manutencao'
+      fullPath: '/inquilino/manutencao'
+      preLoaderRoute: typeof InquilinoManutencaoRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/meu-imovel': {
+      id: '/inquilino/meu-imovel'
+      path: '/meu-imovel'
+      fullPath: '/inquilino/meu-imovel'
+      preLoaderRoute: typeof InquilinoMeuImovelRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/proximidades': {
+      id: '/inquilino/proximidades'
+      path: '/proximidades'
+      fullPath: '/inquilino/proximidades'
+      preLoaderRoute: typeof InquilinoProximidadesRouteImport
+      parentRoute: typeof InquilinoRoute
+    }
+    '/inquilino/visao-geral': {
+      id: '/inquilino/visao-geral'
+      path: '/visao-geral'
+      fullPath: '/inquilino/visao-geral'
+      preLoaderRoute: typeof InquilinoVisaoGeralRouteImport
+      parentRoute: typeof InquilinoRoute
     }
     '/dono/imoveis/': {
       id: '/dono/imoveis/'
@@ -301,9 +473,36 @@ const DonoRouteChildren: DonoRouteChildren = {
 
 const DonoRouteWithChildren = DonoRoute._addFileChildren(DonoRouteChildren)
 
+interface InquilinoRouteChildren {
+  InquilinoContratoRoute: typeof InquilinoContratoRoute
+  InquilinoConversasRoute: typeof InquilinoConversasRoute
+  InquilinoDocumentosRoute: typeof InquilinoDocumentosRoute
+  InquilinoFinanceiroRoute: typeof InquilinoFinanceiroRoute
+  InquilinoManutencaoRoute: typeof InquilinoManutencaoRoute
+  InquilinoMeuImovelRoute: typeof InquilinoMeuImovelRoute
+  InquilinoProximidadesRoute: typeof InquilinoProximidadesRoute
+  InquilinoVisaoGeralRoute: typeof InquilinoVisaoGeralRoute
+}
+
+const InquilinoRouteChildren: InquilinoRouteChildren = {
+  InquilinoContratoRoute: InquilinoContratoRoute,
+  InquilinoConversasRoute: InquilinoConversasRoute,
+  InquilinoDocumentosRoute: InquilinoDocumentosRoute,
+  InquilinoFinanceiroRoute: InquilinoFinanceiroRoute,
+  InquilinoManutencaoRoute: InquilinoManutencaoRoute,
+  InquilinoMeuImovelRoute: InquilinoMeuImovelRoute,
+  InquilinoProximidadesRoute: InquilinoProximidadesRoute,
+  InquilinoVisaoGeralRoute: InquilinoVisaoGeralRoute,
+}
+
+const InquilinoRouteWithChildren = InquilinoRoute._addFileChildren(
+  InquilinoRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DonoRoute: DonoRouteWithChildren,
+  InquilinoRoute: InquilinoRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

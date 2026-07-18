@@ -1,9 +1,21 @@
-import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, MapPin, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { StatusBadge } from "@/components/status-badge";
-import type { Property } from "@/data/properties";
+import { removeProperty, type Property } from "@/data/properties";
 import { formatBRL } from "@/lib/format";
 import { formatStreetLine, formatCityLine, formatZip } from "@/lib/address";
 
@@ -12,9 +24,19 @@ interface Props {
 }
 
 export function PropertyHeader({ property }: Props) {
+  const navigate = useNavigate();
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const onEdit = () => toast.info(`Edição de "${property.name}" em breve.`);
-  const onDelete = () =>
-    toast.warning(`Excluir "${property.name}"? Ação indisponível nesta demonstração.`);
+
+  const handleDelete = () => {
+    const removed = removeProperty(property.id);
+    if (removed) {
+      toast.success(`"${property.name}" foi removido do portfólio.`);
+      navigate({ to: "/dono/imoveis" });
+    } else {
+      toast.error("Não foi possível remover o imóvel.");
+    }
+  };
 
   return (
     <div className="relative overflow-hidden rounded-3xl border bg-card shadow-card">
@@ -37,15 +59,19 @@ export function PropertyHeader({ property }: Props) {
               <Pencil className="h-4 w-4" />
               Editar
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-              onClick={onDelete}
-            >
-              <Trash2 className="h-4 w-4" />
-              Excluir
-            </Button>
+            <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Excluir
+                </Button>
+              </AlertDialogTrigger>
+              <DeleteConfirmContent name={property.name} onConfirm={handleDelete} />
+            </AlertDialog>
           </div>
         </div>
 
@@ -83,17 +109,44 @@ export function PropertyHeader({ property }: Props) {
             <Pencil className="h-4 w-4" />
             Editar
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex-1 gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
-            onClick={onDelete}
-          >
-            <Trash2 className="h-4 w-4" />
-            Excluir
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="flex-1 gap-1.5 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              >
+                <Trash2 className="h-4 w-4" />
+                Excluir
+              </Button>
+            </AlertDialogTrigger>
+            <DeleteConfirmContent name={property.name} onConfirm={handleDelete} />
+          </AlertDialog>
         </div>
       </div>
     </div>
+  );
+}
+
+function DeleteConfirmContent({ name, onConfirm }: { name: string; onConfirm: () => void }) {
+  return (
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>Excluir "{name}"?</AlertDialogTitle>
+        <AlertDialogDescription>
+          Este imóvel será removido do seu portfólio nesta demonstração. Você pode cadastrar
+          novamente pelo botão "Novo imóvel".
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+        <AlertDialogAction
+          onClick={onConfirm}
+          className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+        >
+          Sim, excluir
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
   );
 }

@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { hydrateSession } from "@/data/auth";
 
 // Aplica tema + acessibilidade salvos antes da primeira pintura (evita "flash").
 const themeInit = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("alugaflow-theme")||"light";d.classList.toggle("dark",t==="dark");var m=localStorage.getItem("a11y-mode");if(m&&m!=="default")d.classList.add("a11y-"+m);var f=localStorage.getItem("a11y-font");if(f)d.style.fontSize=f+"px";}catch(e){}})();`;
@@ -28,10 +29,10 @@ function NotFoundComponent() {
         </p>
         <div className="mt-6">
           <Link
-            to="/dono/visao-geral"
+            to="/"
             className="inline-flex items-center justify-center rounded-lg bg-gradient-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-elegant transition-opacity hover:opacity-95"
           >
-            Voltar ao painel
+            Voltar ao início
           </Link>
         </div>
       </div>
@@ -125,6 +126,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Reidrata a sessão persistida no localStorage no primeiro mount do cliente.
+  useEffect(() => {
+    hydrateSession();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
