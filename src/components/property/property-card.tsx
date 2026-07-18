@@ -34,7 +34,7 @@ export function PropertyCard({ property }: Props) {
             {cover?.label ?? "Sem foto"}
           </span>
           <div className="absolute right-3 top-3">
-            <StatusBadge status={property.status} className="backdrop-blur-sm" />
+            <StatusBadge status={property.status} className="shadow-sm" />
           </div>
         </div>
 

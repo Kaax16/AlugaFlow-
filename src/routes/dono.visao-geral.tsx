@@ -11,7 +11,7 @@ import { formatBRL, formatBRLShort } from "@/lib/format";
 export const Route = createFileRoute("/dono/visao-geral")({
   head: () => ({
     meta: [
-      { title: "Visão geral · AlugaFlow" },
+      { title: "Visão geral · Aluga+" },
       { name: "description", content: "Resumo financeiro e operacional dos seus imóveis." },
     ],
   }),

@@ -33,7 +33,8 @@ const FORTALEZA: [number, number] = [-38.4889, -3.7364];
 // Estilo vetorial escuro e modular (sem estética "realista"), sem chave de API.
 const MAP_STYLE = "https://tiles.openfreemap.org/styles/dark";
 
-// Cores dos marcadores por status (fixas — o mapa é sempre escuro).
+// Cores dos marcadores por status (o modo daltônico é aplicado globalmente
+// por um filtro no <body>, então recolore os marcadores junto).
 const STATUS_COLOR: Record<PropertyStatus, string> = {
   ocupado: "#34d399",
   disponivel: "#fbbf24",
@@ -165,7 +166,7 @@ export function PropertyMap({
       mapRef.current?.remove();
       mapRef.current = null;
     };
-    // Recria os marcadores apenas quando muda a lista de pontos.
+    // Recria o mapa/marcadores apenas quando muda a lista de pontos.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [points]);
 

@@ -8,17 +8,19 @@ export const Route = createFileRoute("/dono")({
 });
 
 function DonoLayout() {
+  // Estrutura canônica do shadcn: o SidebarProvider é o flex-row; a sidebar e o
+  // conteúdo são irmãos diretos, então o conteúdo reflui ao recolher o menu.
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-background">
-        <AppSidebar />
-        <SidebarInset className="flex flex-1 flex-col">
-          <AppHeader />
-          <main className="flex-1 space-y-6 p-4 sm:p-6 lg:p-8">
-            <Outlet />
-          </main>
-        </SidebarInset>
-      </div>
+      <AppSidebar />
+      {/* min-w-0 deixa o conteúdo encolher junto com a área (sem forçar scroll
+          horizontal quando a sidebar recolhe/expande). */}
+      <SidebarInset className="min-w-0">
+        <AppHeader />
+        <main className="min-w-0 flex-1 space-y-6 p-4 sm:p-6 lg:p-8">
+          <Outlet />
+        </main>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

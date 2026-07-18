@@ -24,12 +24,12 @@ export const Route = createFileRoute("/dono/imoveis/$id")({
     meta: [
       {
         title: loaderData
-          ? `${loaderData.property.name} · AlugaFlow`
-          : "Imóvel não encontrado · AlugaFlow",
+          ? `${loaderData.property.name} · Aluga+`
+          : "Imóvel não encontrado · Aluga+",
       },
       {
         name: "description",
-        content: loaderData?.property.description ?? "Detalhes do imóvel gerenciado no AlugaFlow.",
+        content: loaderData?.property.description ?? "Detalhes do imóvel gerenciado no Aluga+.",
       },
       ...(loaderData ? [] : [{ name: "robots", content: "noindex" }]),
     ],

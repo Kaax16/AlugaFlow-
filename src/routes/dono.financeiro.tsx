@@ -1,7 +1,10 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Filter as FilterIcon } from "lucide-react";
 import { SectionHeader } from "@/components/section-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { AnalyticsChart } from "@/components/analytics-chart";
 import {
   Table,
@@ -12,12 +15,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { StatusBadge } from "@/components/status-badge";
-import { properties, paymentStatusLabel, type PaymentStatus } from "@/data/properties";
+import { properties, type PaymentStatus } from "@/data/properties";
 import { formatBRL, formatBRLShort, formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/dono/financeiro")({
-  head: () => ({ meta: [{ title: "Financeiro · AlugaFlow" }] }),
+  head: () => ({ meta: [{ title: "Financeiro · Aluga+" }] }),
   component: Financeiro,
 });
 
@@ -31,14 +34,38 @@ const filters: { value: Filter; label: string }[] = [
   { value: "atrasado", label: "Atrasados" },
 ];
 
+type DueFilter = "todos" | "mes" | "30dias";
+const dueFilters: { value: DueFilter; label: string }[] = [
+  { value: "todos", label: "Qualquer data" },
+  { value: "mes", label: "Vence este mês" },
+  { value: "30dias", label: "Próximos 30 dias" },
+];
+
+// Referência de "hoje" no mundo dos dados de exemplo (julho/2026).
+const HOJE = new Date("2026-07-17T00:00:00Z");
+
+function matchDue(dateIso: string, due: DueFilter): boolean {
+  if (due === "todos") return true;
+  const d = new Date(dateIso);
+  if (due === "mes")
+    return d.getUTCFullYear() === HOJE.getUTCFullYear() && d.getUTCMonth() === HOJE.getUTCMonth();
+  const diffDias = (d.getTime() - HOJE.getTime()) / 86400000;
+  return diffDias >= 0 && diffDias <= 30;
+}
+
 function Financeiro() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState<Filter>("todos");
+  const [due, setDue] = useState<DueFilter>("todos");
 
   const rows = useMemo(
     () =>
-      filter === "todos" ? properties : properties.filter((p) => p.financial.status === filter),
-    [filter],
+      properties.filter(
+        (p) =>
+          (filter === "todos" || p.financial.status === filter) &&
+          matchDue(p.financial.nextDueDate, due),
+      ),
+    [filter, due],
   );
 
   return (
@@ -76,7 +103,7 @@ function Financeiro() {
       <Card className="shadow-card">
         <CardHeader className="gap-3">
           <CardTitle>Pagamentos por imóvel</CardTitle>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {filters.map((f) => (
               <button
                 key={f.value}
@@ -92,6 +119,38 @@ function Financeiro() {
                 {f.label}
               </button>
             ))}
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="sm" className="ml-auto h-7 gap-1.5">
+                  <FilterIcon className="h-3.5 w-3.5" />
+                  Vencimento
+                  {due !== "todos" ? (
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  ) : null}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-56 space-y-1">
+                <p className="px-1 pb-1 text-xs font-medium text-muted-foreground">
+                  Filtrar por vencimento
+                </p>
+                {dueFilters.map((d) => (
+                  <button
+                    key={d.value}
+                    type="button"
+                    onClick={() => setDue(d.value)}
+                    className={cn(
+                      "w-full rounded-md px-2 py-1.5 text-left text-sm transition-colors",
+                      due === d.value
+                        ? "bg-primary/10 font-medium text-primary"
+                        : "text-muted-foreground hover:bg-muted",
+                    )}
+                  >
+                    {d.label}
+                  </button>
+                ))}
+              </PopoverContent>
+            </Popover>
           </div>
         </CardHeader>
 
@@ -178,7 +237,7 @@ function Financeiro() {
 
           {rows.length === 0 ? (
             <p className="px-4 py-10 text-center text-sm text-muted-foreground">
-              Nenhum imóvel com status “{paymentStatusLabel(filter as PaymentStatus)}”.
+              Nenhum imóvel com esses filtros.
             </p>
           ) : null}
         </CardContent>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Accessibility, Bell, Moon, Search, Sun } from "lucide-react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Bell, ChevronLeft, Moon, Search, Sun } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { StatusBadge } from "@/components/status-badge";
+import { AccessibilityMenu } from "@/components/accessibility-menu";
 import { useTheme } from "@/components/theme-provider";
 import { properties } from "@/data/properties";
 import { formatStreetLine } from "@/lib/address";
@@ -22,7 +23,8 @@ import { cn } from "@/lib/utils";
 const alerts = properties.filter((p) => p.financial.status !== "em_dia");
 
 export function AppHeader() {
-  const { theme, colorblind, toggleTheme, toggleColorblind } = useTheme();
+  const { theme, toggleTheme } = useTheme();
+  const { toggleSidebar, state } = useSidebar();
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
@@ -39,8 +41,19 @@ export function AppHeader() {
   }, [query]);
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur-md sm:px-6">
-      <SidebarTrigger />
+    <header className="sticky top-0 z-20 flex h-14 items-center gap-2 border-b bg-background px-3 sm:px-6">
+      {/* Gatilho da sidebar com seta (aponta para o lado que vai abrir/fechar). */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="h-8 w-8"
+        onClick={toggleSidebar}
+        aria-label={state === "collapsed" ? "Expandir menu" : "Recolher menu"}
+      >
+        <ChevronLeft
+          className={cn("h-4 w-4 transition-transform", state === "collapsed" && "rotate-180")}
+        />
+      </Button>
       <Separator orientation="vertical" className="mx-1 h-5" />
 
       {/* Busca funcional: filtra imóveis e leva ao detalhe. */}
@@ -79,17 +92,7 @@ export function AppHeader() {
         ) : null}
       </div>
 
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={toggleColorblind}
-        aria-pressed={colorblind}
-        aria-label="Modo para daltonismo"
-        title="Modo para daltonismo"
-        className={cn(colorblind && "text-primary")}
-      >
-        <Accessibility className="h-4 w-4" />
-      </Button>
+      <AccessibilityMenu />
 
       <Button
         variant="ghost"

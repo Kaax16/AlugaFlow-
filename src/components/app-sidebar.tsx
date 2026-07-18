@@ -55,12 +55,17 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader className="border-b border-sidebar-border">
-        <Link to="/dono/visao-geral" className="flex items-center gap-3 px-1 py-2">
-          <BrandLogo className="h-9 w-9 rounded-xl shadow-glow sm:h-10 sm:w-10" />
-          {!collapsed && (
-            <div className="min-w-0">
-              <p className="truncate text-base font-semibold tracking-tight">AlugaFlow</p>
-              <p className="truncate text-[11px] text-muted-foreground">Gestão de imóveis</p>
+        <Link to="/dono/visao-geral" className="flex items-center gap-2.5 px-1 py-2">
+          {collapsed ? (
+            <BrandLogo className="h-9 w-9" />
+          ) : (
+            <div className="flex min-w-0 flex-col gap-0.5">
+              <img
+                src="/logo-trim.png"
+                alt="Aluga+"
+                className="h-7 w-auto max-w-[150px] object-contain object-left"
+              />
+              <span className="pl-0.5 text-[11px] text-muted-foreground">Gestão de imóveis</span>
             </div>
           )}
         </Link>

@@ -7,7 +7,7 @@ import { properties } from "@/data/properties";
 import { formatDateTime, initialsFromName } from "@/lib/format";
 
 export const Route = createFileRoute("/dono/conversas")({
-  head: () => ({ meta: [{ title: "Conversas · AlugaFlow" }] }),
+  head: () => ({ meta: [{ title: "Conversas · Aluga+" }] }),
   component: Conversas,
 });
 

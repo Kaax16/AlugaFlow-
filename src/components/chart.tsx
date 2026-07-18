@@ -9,12 +9,15 @@ interface Props {
   className?: string;
 }
 
+type ChartInstance = { reflow: () => void };
+
 // Tipos mínimos das libs carregadas dinamicamente (evita rodar no SSR).
 type Highcharts = { setOptions: (o: Options) => void; merge: (...o: Options[]) => Options };
 type HighchartsReactComponent = (props: {
   highcharts: unknown;
   options: Options;
   containerProps?: Record<string, unknown>;
+  callback?: (chart: ChartInstance) => void;
 }) => React.ReactElement;
 
 // Desembrulha camadas de `default` deixadas pelo interop CJS/ESM.
@@ -30,13 +33,15 @@ function resolveComponent(mod: unknown): HighchartsReactComponent {
   return c as unknown as HighchartsReactComponent;
 }
 
-/** Wrapper client-only do Highcharts, com o tema atual mesclado às opções. */
+/** Wrapper client-only do Highcharts, com o tema atual e reflow responsivo. */
 export function Chart({ options, className }: Props) {
-  const { theme, colorblind } = useTheme();
+  const { theme } = useTheme();
   const [mods, setMods] = useState<{
     hc: Highcharts;
     HighchartsReact: HighchartsReactComponent;
   } | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<ChartInstance | null>(null);
   const alive = useRef(true);
 
   useEffect(() => {
@@ -52,6 +57,23 @@ export function Chart({ options, className }: Props) {
     };
   }, []);
 
+  // Highcharts só reage a resize da janela; observamos o container para refazer o
+  // layout quando ele muda de largura (recolher a sidebar, mobile, troca de tipo).
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el || !mods) return;
+    let frame = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => chartRef.current?.reflow());
+    });
+    ro.observe(el);
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+    };
+  }, [mods]);
+
   if (!mods) {
     return (
       <div
@@ -62,15 +84,18 @@ export function Chart({ options, className }: Props) {
   }
 
   const { hc, HighchartsReact } = mods;
-  const merged = hc.merge(buildChartTheme(theme, colorblind), options);
+  const merged = hc.merge(buildChartTheme(theme), options);
   return (
-    <div className={className}>
-      {/* key força recriar o gráfico ao alternar tema/daltonismo */}
+    <div ref={wrapperRef} className={cn("w-full", className)}>
+      {/* key força recriar o gráfico ao alternar o tema */}
       <HighchartsReact
-        key={`${theme}-${colorblind}`}
+        key={theme}
         highcharts={hc}
         options={merged}
         containerProps={{ style: { height: "100%" } }}
+        callback={(chart) => {
+          chartRef.current = chart;
+        }}
       />
     </div>
   );

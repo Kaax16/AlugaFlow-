@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * AlugaFlow — Premium purple SaaS design system.
+ * Aluga+ — Premium purple SaaS design system.
  * All colors in oklch. Never hardcode text-white / bg-[#…] in components.
  */
 
@@ -204,6 +204,31 @@
   --shadow-card:
     0 1px 0 oklch(1 0 0 / 0.04) inset, 0 1px 2px oklch(0 0 0 / 0.4),
     0 10px 30px -12px oklch(0 0 0 / 0.5);
+}
+
+/*
+ * Acessibilidade visual — o modo escolhido vira uma classe no <html> e o efeito
+ * é aplicado no <body> inteiro, refletindo em TODA a tela (inclusive mapa e gráficos).
+ */
+.a11y-protanopia body {
+  filter: url(#cb-protanopia);
+}
+.a11y-deuteranopia body {
+  filter: url(#cb-deuteranopia);
+}
+.a11y-tritanopia body {
+  filter: url(#cb-tritanopia);
+}
+.a11y-high-contrast body {
+  filter: contrast(1.28) saturate(1.12);
+}
+.a11y-reduced-motion *,
+.a11y-reduced-motion *::before,
+.a11y-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 @layer base {

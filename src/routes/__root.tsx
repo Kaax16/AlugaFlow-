@@ -14,8 +14,8 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// Aplica o tema salvo antes da primeira pintura, evitando "flash" de cor.
-const themeInit = `(function(){try{var t=localStorage.getItem("alugaflow-theme")||"light";var c=localStorage.getItem("alugaflow-colorblind")==="true";document.documentElement.classList.toggle("dark",t==="dark");document.documentElement.dataset.colorblind=c;}catch(e){}})();`;
+// Aplica tema + acessibilidade salvos antes da primeira pintura (evita "flash").
+const themeInit = `(function(){try{var d=document.documentElement;var t=localStorage.getItem("alugaflow-theme")||"light";d.classList.toggle("dark",t==="dark");var m=localStorage.getItem("a11y-mode");if(m&&m!=="default")d.classList.add("a11y-"+m);var f=localStorage.getItem("a11y-font");if(f)d.style.fontSize=f+"px";}catch(e){}})();`;
 
 function NotFoundComponent() {
   return (
@@ -80,14 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AlugaFlow — Gestão premium de imóveis alugados" },
+      { title: "Aluga+ — Gestão premium de imóveis alugados" },
       {
         name: "description",
         content:
-          "AlugaFlow é a plataforma SaaS que centraliza contratos, financeiro, manutenção e comunicação dos seus imóveis alugados.",
+          "Aluga+ é a plataforma SaaS que centraliza contratos, financeiro, manutenção e comunicação dos seus imóveis alugados.",
       },
-      { name: "author", content: "AlugaFlow" },
-      { property: "og:title", content: "AlugaFlow — Gestão premium de imóveis alugados" },
+      { name: "author", content: "Aluga+" },
+      { property: "og:title", content: "Aluga+ — Gestão premium de imóveis alugados" },
       {
         property: "og:description",
         content:
@@ -98,7 +98,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", sizes: "any" },
+      { rel: "icon", href: "/favicon-mark.png", type: "image/png" },
     ],
   }),
   shellComponent: RootShell,

@@ -6,7 +6,7 @@ import { formatBRL, formatDate } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 
 export const Route = createFileRoute("/dono/contratos")({
-  head: () => ({ meta: [{ title: "Contratos · AlugaFlow" }] }),
+  head: () => ({ meta: [{ title: "Contratos · Aluga+" }] }),
   component: Contratos,
 });
 

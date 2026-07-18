@@ -2,12 +2,9 @@ import type { Options } from "highcharts";
 
 export type ThemeMode = "light" | "dark";
 
-// Paleta da marca (roxo) e paleta segura para daltonismo (padrão Okabe–Ito).
+// Paleta da marca (roxo). O modo daltônico é aplicado por um filtro global no
+// <body> (ver AccessibilityMenu), então os gráficos são recoloridos junto.
 const brandPalette = ["#8b5cf6", "#38bdf8", "#22c55e", "#f59e0b", "#f43f5e", "#c4a7fb"];
-const colorblindPalette = ["#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7", "#56B4E9"];
-
-export const chartPalette = (colorblind: boolean) =>
-  colorblind ? colorblindPalette : brandPalette;
 
 /** Cores de texto/grade/tooltip conforme o tema atual. */
 export function chartTokens(mode: ThemeMode) {
@@ -29,10 +26,10 @@ export function chartTokens(mode: ThemeMode) {
 }
 
 /** Tema base do Highcharts, mesclado às opções de cada gráfico. */
-export function buildChartTheme(mode: ThemeMode, colorblind: boolean): Options {
+export function buildChartTheme(mode: ThemeMode): Options {
   const t = chartTokens(mode);
   return {
-    colors: chartPalette(colorblind),
+    colors: brandPalette,
     chart: {
       backgroundColor: "transparent",
       style: { fontFamily: "inherit" },

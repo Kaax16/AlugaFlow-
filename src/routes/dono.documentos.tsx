@@ -11,7 +11,7 @@ import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/dono/documentos")({
-  head: () => ({ meta: [{ title: "Documentos · AlugaFlow" }] }),
+  head: () => ({ meta: [{ title: "Documentos · Aluga+" }] }),
   component: Documentos,
 });
 

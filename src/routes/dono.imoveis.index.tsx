@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/dono/imoveis/")({
   head: () => ({
     meta: [
-      { title: "Imóveis · AlugaFlow" },
+      { title: "Imóveis · Aluga+" },
       { name: "description", content: "Todos os imóveis sob sua gestão em Fortaleza." },
     ],
   }),

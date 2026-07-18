@@ -1,8 +1,9 @@
-import { Bath, BedDouble, Calendar, Car, MapPin, Ruler } from "lucide-react";
+import { Bath, BedDouble, Building2, Calendar, Car, MapPin, Ruler } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ClientOnly } from "@/components/client-only";
 import { PropertyMap } from "@/components/property/property-map";
-import { formatDate } from "@/lib/format";
+import { StatusBadge } from "@/components/status-badge";
+import { formatBRL, formatDate } from "@/lib/format";
 import { formatCityLine, formatZip } from "@/lib/address";
 import type { Property } from "@/data/properties";
 
@@ -61,6 +62,37 @@ export function PropertyInfo({ property }: Props) {
           </div>
         </CardContent>
       </Card>
+
+      {property.units ? (
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Building2 className="h-4 w-4 text-primary" />
+              Unidades do edifício
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              {property.units.filter((u) => u.status === "ocupado").length} de{" "}
+              {property.units.length} unidades ocupadas.
+            </p>
+          </CardHeader>
+          <CardContent className="divide-y p-0">
+            {property.units.map((u) => (
+              <div key={u.id} className="flex items-center justify-between gap-3 px-6 py-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-medium">{u.label}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {u.bedrooms} quartos · {u.tenantName ?? "sem inquilino"}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <span className="text-sm font-semibold text-primary">{formatBRL(u.rent)}</span>
+                  <StatusBadge status={u.status} />
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      ) : null}
 
       <Card className="overflow-hidden shadow-card">
         <CardHeader>
