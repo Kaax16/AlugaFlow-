@@ -1,10 +1,14 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
+  Blocks,
+  CreditCard,
   FileText,
   LayoutDashboard,
   MapPinned,
   MessageSquare,
   Home,
+  Nfc,
+  ShieldCheck,
   Wallet,
   Wrench,
   FolderOpen,
@@ -42,6 +46,13 @@ const items: NavItem[] = [
   { title: "Manutenção", url: "/dono/manutencao", icon: Wrench, badge: 2 },
   { title: "Documentos", url: "/dono/documentos", icon: FolderOpen },
   { title: "Conversas", url: "/dono/conversas", icon: MessageSquare },
+];
+
+const platformItems: NavItem[] = [
+  { title: "Acessos NFC", url: "/dono/acessos", icon: Nfc },
+  { title: "Pagamentos", url: "/dono/pagamentos", icon: CreditCard },
+  { title: "Blockchain", url: "/dono/blockchain", icon: Blocks },
+  { title: "Administração", url: "/dono/administracao", icon: ShieldCheck },
 ];
 
 export function AppSidebar() {
@@ -87,6 +98,24 @@ export function AppSidebar() {
                           {item.badge}
                         </span>
                       ) : null}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Plataforma</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {platformItems.map((item) => (
+                <SidebarMenuItem key={item.url}>
+                  <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
+                    <Link to={item.url} className="sidebar-nav-link">
+                      <item.icon />
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

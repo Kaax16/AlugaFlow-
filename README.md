@@ -22,17 +22,17 @@ O modelo de receita segue o SaaS B2B por assinatura (mensalidade por usuário), 
 
 ## Stack Técnica
 
-| Camada | Tecnologia |
-|---|---|
-| Framework | [TanStack Start](https://tanstack.com/start) (SSR + file-based routing) |
-| UI | React 19, [shadcn/ui](https://ui.shadcn.com/) (Radix UI + Tailwind CSS v4) |
-| Gráficos | [Highcharts](https://www.highcharts.com/) |
-| Mapas | [MapLibre GL JS](https://maplibre.org/) + OpenStreetMap |
-| Formulários | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) |
-| Estado | [TanStack React Query](https://tanstack.com/query) |
-| Build | [Vite 8](https://vite.dev/), TypeScript 5.8 |
-| Estilo | [Tailwind CSS v4](https://tailwindcss.com/), [tw-animate-css](https://github.com/7ulabs/tw-animate-css) |
-| Deploy | [Lovable](https://lovable.dev) |
+| Camada      | Tecnologia                                                                                              |
+| ----------- | ------------------------------------------------------------------------------------------------------- |
+| Framework   | [TanStack Start](https://tanstack.com/start) (SSR + file-based routing)                                 |
+| UI          | React 19, [shadcn/ui](https://ui.shadcn.com/) (Radix UI + Tailwind CSS v4)                              |
+| Gráficos    | [Highcharts](https://www.highcharts.com/)                                                               |
+| Mapas       | [MapLibre GL JS](https://maplibre.org/) + OpenStreetMap                                                 |
+| Formulários | [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/)                               |
+| Estado      | [TanStack React Query](https://tanstack.com/query)                                                      |
+| Build       | [Vite 8](https://vite.dev/), TypeScript 5.8                                                             |
+| Estilo      | [Tailwind CSS v4](https://tailwindcss.com/), [tw-animate-css](https://github.com/7ulabs/tw-animate-css) |
+| Deploy      | [Lovable](https://lovable.dev)                                                                          |
 
 ## Estrutura do Projeto
 
@@ -97,12 +97,12 @@ bun run preview
 
 ## KPIs Relevantes ao Negócio
 
-| Métrica | Benchmark do Segmento | Meta AlugaFlow |
-|---|---|---|
-| LTV/CAC | >= 4:1 | >= 4:1 |
-| Churn mensal | < 2% | < 2% |
-| Payback CAC | 12-24 meses | <= 12 meses |
-| Margem bruta | 70-80% | >= 75% |
+| Métrica      | Benchmark do Segmento | Meta AlugaFlow |
+| ------------ | --------------------- | -------------- |
+| LTV/CAC      | >= 4:1                | >= 4:1         |
+| Churn mensal | < 2%                  | < 2%           |
+| Payback CAC  | 12-24 meses           | <= 12 meses    |
+| Margem bruta | 70-80%                | >= 75%         |
 
 ## Licença
 

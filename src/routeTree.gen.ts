@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DonoRouteImport } from './routes/dono'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DonoVisaoGeralRouteImport } from './routes/dono.visao-geral'
+import { Route as DonoPagamentosRouteImport } from './routes/dono.pagamentos'
 import { Route as DonoMapaRouteImport } from './routes/dono.mapa'
 import { Route as DonoManutencaoRouteImport } from './routes/dono.manutencao'
 import { Route as DonoImoveisRouteImport } from './routes/dono.imoveis'
@@ -19,6 +20,9 @@ import { Route as DonoFinanceiroRouteImport } from './routes/dono.financeiro'
 import { Route as DonoDocumentosRouteImport } from './routes/dono.documentos'
 import { Route as DonoConversasRouteImport } from './routes/dono.conversas'
 import { Route as DonoContratosRouteImport } from './routes/dono.contratos'
+import { Route as DonoBlockchainRouteImport } from './routes/dono.blockchain'
+import { Route as DonoAdministracaoRouteImport } from './routes/dono.administracao'
+import { Route as DonoAcessosRouteImport } from './routes/dono.acessos'
 import { Route as DonoImoveisIndexRouteImport } from './routes/dono.imoveis.index'
 import { Route as DonoImoveisIdRouteImport } from './routes/dono.imoveis.$id'
 
@@ -35,6 +39,11 @@ const IndexRoute = IndexRouteImport.update({
 const DonoVisaoGeralRoute = DonoVisaoGeralRouteImport.update({
   id: '/visao-geral',
   path: '/visao-geral',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoPagamentosRoute = DonoPagamentosRouteImport.update({
+  id: '/pagamentos',
+  path: '/pagamentos',
   getParentRoute: () => DonoRoute,
 } as any)
 const DonoMapaRoute = DonoMapaRouteImport.update({
@@ -72,6 +81,21 @@ const DonoContratosRoute = DonoContratosRouteImport.update({
   path: '/contratos',
   getParentRoute: () => DonoRoute,
 } as any)
+const DonoBlockchainRoute = DonoBlockchainRouteImport.update({
+  id: '/blockchain',
+  path: '/blockchain',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoAdministracaoRoute = DonoAdministracaoRouteImport.update({
+  id: '/administracao',
+  path: '/administracao',
+  getParentRoute: () => DonoRoute,
+} as any)
+const DonoAcessosRoute = DonoAcessosRouteImport.update({
+  id: '/acessos',
+  path: '/acessos',
+  getParentRoute: () => DonoRoute,
+} as any)
 const DonoImoveisIndexRoute = DonoImoveisIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -86,6 +110,9 @@ const DonoImoveisIdRoute = DonoImoveisIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/dono/acessos': typeof DonoAcessosRoute
+  '/dono/administracao': typeof DonoAdministracaoRoute
+  '/dono/blockchain': typeof DonoBlockchainRoute
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
@@ -93,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/dono/imoveis': typeof DonoImoveisRouteWithChildren
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
+  '/dono/pagamentos': typeof DonoPagamentosRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis/': typeof DonoImoveisIndexRoute
@@ -100,12 +128,16 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/dono/acessos': typeof DonoAcessosRoute
+  '/dono/administracao': typeof DonoAdministracaoRoute
+  '/dono/blockchain': typeof DonoBlockchainRoute
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
   '/dono/financeiro': typeof DonoFinanceiroRoute
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
+  '/dono/pagamentos': typeof DonoPagamentosRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis': typeof DonoImoveisIndexRoute
@@ -114,6 +146,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dono': typeof DonoRouteWithChildren
+  '/dono/acessos': typeof DonoAcessosRoute
+  '/dono/administracao': typeof DonoAdministracaoRoute
+  '/dono/blockchain': typeof DonoBlockchainRoute
   '/dono/contratos': typeof DonoContratosRoute
   '/dono/conversas': typeof DonoConversasRoute
   '/dono/documentos': typeof DonoDocumentosRoute
@@ -121,6 +156,7 @@ export interface FileRoutesById {
   '/dono/imoveis': typeof DonoImoveisRouteWithChildren
   '/dono/manutencao': typeof DonoManutencaoRoute
   '/dono/mapa': typeof DonoMapaRoute
+  '/dono/pagamentos': typeof DonoPagamentosRoute
   '/dono/visao-geral': typeof DonoVisaoGeralRoute
   '/dono/imoveis/$id': typeof DonoImoveisIdRoute
   '/dono/imoveis/': typeof DonoImoveisIndexRoute
@@ -130,6 +166,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dono'
+    | '/dono/acessos'
+    | '/dono/administracao'
+    | '/dono/blockchain'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
@@ -137,6 +176,7 @@ export interface FileRouteTypes {
     | '/dono/imoveis'
     | '/dono/manutencao'
     | '/dono/mapa'
+    | '/dono/pagamentos'
     | '/dono/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis/'
@@ -144,12 +184,16 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dono'
+    | '/dono/acessos'
+    | '/dono/administracao'
+    | '/dono/blockchain'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
     | '/dono/financeiro'
     | '/dono/manutencao'
     | '/dono/mapa'
+    | '/dono/pagamentos'
     | '/dono/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis'
@@ -157,6 +201,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dono'
+    | '/dono/acessos'
+    | '/dono/administracao'
+    | '/dono/blockchain'
     | '/dono/contratos'
     | '/dono/conversas'
     | '/dono/documentos'
@@ -164,6 +211,7 @@ export interface FileRouteTypes {
     | '/dono/imoveis'
     | '/dono/manutencao'
     | '/dono/mapa'
+    | '/dono/pagamentos'
     | '/dono/visao-geral'
     | '/dono/imoveis/$id'
     | '/dono/imoveis/'
@@ -195,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/visao-geral'
       fullPath: '/dono/visao-geral'
       preLoaderRoute: typeof DonoVisaoGeralRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/pagamentos': {
+      id: '/dono/pagamentos'
+      path: '/pagamentos'
+      fullPath: '/dono/pagamentos'
+      preLoaderRoute: typeof DonoPagamentosRouteImport
       parentRoute: typeof DonoRoute
     }
     '/dono/mapa': {
@@ -246,6 +301,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DonoContratosRouteImport
       parentRoute: typeof DonoRoute
     }
+    '/dono/blockchain': {
+      id: '/dono/blockchain'
+      path: '/blockchain'
+      fullPath: '/dono/blockchain'
+      preLoaderRoute: typeof DonoBlockchainRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/administracao': {
+      id: '/dono/administracao'
+      path: '/administracao'
+      fullPath: '/dono/administracao'
+      preLoaderRoute: typeof DonoAdministracaoRouteImport
+      parentRoute: typeof DonoRoute
+    }
+    '/dono/acessos': {
+      id: '/dono/acessos'
+      path: '/acessos'
+      fullPath: '/dono/acessos'
+      preLoaderRoute: typeof DonoAcessosRouteImport
+      parentRoute: typeof DonoRoute
+    }
     '/dono/imoveis/': {
       id: '/dono/imoveis/'
       path: '/'
@@ -278,6 +354,9 @@ const DonoImoveisRouteWithChildren = DonoImoveisRoute._addFileChildren(
 )
 
 interface DonoRouteChildren {
+  DonoAcessosRoute: typeof DonoAcessosRoute
+  DonoAdministracaoRoute: typeof DonoAdministracaoRoute
+  DonoBlockchainRoute: typeof DonoBlockchainRoute
   DonoContratosRoute: typeof DonoContratosRoute
   DonoConversasRoute: typeof DonoConversasRoute
   DonoDocumentosRoute: typeof DonoDocumentosRoute
@@ -285,10 +364,14 @@ interface DonoRouteChildren {
   DonoImoveisRoute: typeof DonoImoveisRouteWithChildren
   DonoManutencaoRoute: typeof DonoManutencaoRoute
   DonoMapaRoute: typeof DonoMapaRoute
+  DonoPagamentosRoute: typeof DonoPagamentosRoute
   DonoVisaoGeralRoute: typeof DonoVisaoGeralRoute
 }
 
 const DonoRouteChildren: DonoRouteChildren = {
+  DonoAcessosRoute: DonoAcessosRoute,
+  DonoAdministracaoRoute: DonoAdministracaoRoute,
+  DonoBlockchainRoute: DonoBlockchainRoute,
   DonoContratosRoute: DonoContratosRoute,
   DonoConversasRoute: DonoConversasRoute,
   DonoDocumentosRoute: DonoDocumentosRoute,
@@ -296,6 +379,7 @@ const DonoRouteChildren: DonoRouteChildren = {
   DonoImoveisRoute: DonoImoveisRouteWithChildren,
   DonoManutencaoRoute: DonoManutencaoRoute,
   DonoMapaRoute: DonoMapaRoute,
+  DonoPagamentosRoute: DonoPagamentosRoute,
   DonoVisaoGeralRoute: DonoVisaoGeralRoute,
 }
 

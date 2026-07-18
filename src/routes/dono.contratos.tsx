@@ -21,9 +21,7 @@ function Contratos() {
             <CardHeader className="flex flex-row items-start justify-between gap-3 space-y-0">
               <div>
                 <CardTitle>{p.name}</CardTitle>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Inquilino: {p.tenant?.name}
-                </p>
+                <p className="mt-1 text-sm text-muted-foreground">Inquilino: {p.tenant?.name}</p>
               </div>
               <Badge className="border border-success/30 bg-success/15 text-success">Ativo</Badge>
             </CardHeader>

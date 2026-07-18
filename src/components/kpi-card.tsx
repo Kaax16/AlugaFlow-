@@ -27,9 +27,7 @@ export function KpiCard({ label, value, hint, icon: Icon, tone = "default", tren
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
             {label}
           </p>
-          <p className="truncate text-2xl font-semibold tracking-tight text-foreground">
-            {value}
-          </p>
+          <p className="truncate text-2xl font-semibold tracking-tight text-foreground">{value}</p>
           {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
           {trend ? (
             <p

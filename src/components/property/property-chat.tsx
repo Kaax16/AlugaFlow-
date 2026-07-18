@@ -68,13 +68,11 @@ export function PropertyChat({ property }: Props) {
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col gap-4 overflow-hidden p-0">
-        <div
-          ref={scrollRef}
-          className="flex-1 space-y-3 overflow-y-auto bg-gradient-subtle p-4"
-        >
+        <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-gradient-subtle p-4">
           {messages.length === 0 ? (
             <div className="grid h-full place-items-center text-center text-sm text-muted-foreground">
-              Nenhuma mensagem ainda.<br />
+              Nenhuma mensagem ainda.
+              <br />
               Envie a primeira mensagem para começar a conversa.
             </div>
           ) : (
@@ -82,10 +80,7 @@ export function PropertyChat({ property }: Props) {
           )}
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="flex items-end gap-2 border-t bg-card p-3"
-        >
+        <form onSubmit={handleSubmit} className="flex items-end gap-2 border-t bg-card p-3">
           <Textarea
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
